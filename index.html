@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Classroom System - a simple classroom management dashboard.">
+  <title>SmartClass | Classroom Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="SmartClass home">
+        <span class="brand-mark">S</span><span>smart<span class="brand-light">class</span></span>
+      </a>
+      <div class="school-label">LEARNING SPACE</div>
+      <nav class="nav-menu" aria-label="Main navigation">
+        <button class="nav-link active" data-view="overview"><span class="nav-icon">▦</span> Overview</button>
+        <button class="nav-link" data-view="attendance"><span class="nav-icon">✓</span> Attendance</button>
+        <button class="nav-link" data-view="timetable"><span class="nav-icon">▤</span> Timetable</button>
+        <button class="nav-link" data-view="assignments"><span class="nav-icon">▧</span> Assignments</button>
+        <button class="nav-link" data-view="resources"><span class="nav-icon">▣</span> Resources</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">✦</div>
+          <strong>Need a hand?</strong>
+          <p>Keep your classroom organized in one place.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar">SC</div>
+          <div><strong>Class Admin</strong><small>Administrator</small></div>
+          <span class="profile-dots">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+        <div class="breadcrumb">Learning Space <span>/</span> <strong id="pageCrumb">Overview</strong></div>
+        <div class="top-actions">
+          <span class="today-label" id="todayLabel"></span>
+          <button class="icon-button" id="notificationButton" aria-label="Notifications">♧<i></i></button>
+          <div class="top-avatar">SC</div>
+        </div>
+      </header>
+
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">YOUR CLASSROOM AT A GLANCE</p>
+          <h1 id="pageTitle">Good day, Class Admin <span>✦</span></h1>
+          <p class="subheading" id="pageSubtitle">Here's what's happening in your classroom today.</p>
+        </div>
+        <button class="primary-button" id="quickAddButton">＋ Quick announcement</button>
+      </section>
+
+      <section class="view active" id="overviewView">
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total students</span><span class="stat-icon purple">♙</span></div><div class="stat-number" id="studentCount">42</div><div class="stat-note"><span class="positive">● Active class</span> <span>Section AI-2</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Present today</span><span class="stat-icon green">✓</span></div><div class="stat-number" id="presentCount">38</div><div class="stat-note"><span class="positive" id="presentPercent">90.5%</span> <span>attendance rate</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Pending tasks</span><span class="stat-icon orange">▧</span></div><div class="stat-number" id="pendingCount">3</div><div class="stat-note"><span class="warning">● Needs attention</span> <span>assignments</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Announcements</span><span class="stat-icon blue">◉</span></div><div class="stat-number" id="announcementCount">4</div><div class="stat-note"><span class="muted">Latest updates</span> <span>for your class</span></div></article>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel schedule-panel">
+            <div class="panel-heading"><div><p class="eyebrow">YOUR DAY</p><h2>Today's timetable</h2></div><button class="text-button" data-goto="timetable">View timetable ↗</button></div>
+            <div id="todaySchedule" class="schedule-list"></div>
+          </article>
+          <article class="panel announcements-panel">
+            <div class="panel-heading"><div><p class="eyebrow">STAY IN THE LOOP</p><h2>Announcements</h2></div><button class="text-button" data-goto="resources">All updates ↗</button></div>
+            <div id="announcementList" class="announcement-list"></div>
+          </article>
+        </div>
+        <article class="panel task-panel">
+          <div class="panel-heading"><div><p class="eyebrow">KEEP MOVING FORWARD</p><h2>Assignment tracker</h2></div><button class="text-button" data-goto="assignments">See all tasks ↗</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Assignment</th><th>Subject</th><th>Due date</th><th>Status</th><th></th></tr></thead><tbody id="overviewAssignments"></tbody></table></div>
+        </article>
+      </section>
+
+      <section class="view" id="attendanceView">
+        <div class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">CLASS RECORD</p><h2>Attendance management</h2><p class="panel-desc">Mark each student's attendance for today's class.</p></div><div class="date-chip" id="attendanceDate"></div></div>
+          <div class="attendance-summary"><div><strong id="attendancePresent">38</strong><span>Present</span></div><div><strong id="attendanceAbsent">4</strong><span>Absent</span></div><div><strong id="attendanceRate">90.5%</strong><span>Attendance rate</span></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Roll no.</th><th>Student name</th><th>Attendance</th></tr></thead><tbody id="attendanceRows"></tbody></table></div>
+          <div class="panel-footer"><span class="muted">Changes are saved automatically in this browser.</span><button class="primary-button" id="resetAttendance">Reset sample attendance</button></div>
+        </div>
+      </section>
+
+      <section class="view" id="timetableView">
+        <div class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">PLAN YOUR LEARNING</p><h2>Weekly timetable</h2><p class="panel-desc">A sample weekly schedule for Section AI-2.</p></div><span class="soft-tag">MON – FRI</span></div>
+          <div class="table-wrap"><table class="timetable-table"><thead><tr><th>Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr></thead><tbody id="timetableRows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="view" id="assignmentsView">
+        <div class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">LEARNING TASKS</p><h2>Assignments</h2><p class="panel-desc">Track deadlines and update completion status.</p></div><button class="primary-button" id="addAssignmentButton">＋ Add assignment</button></div>
+          <div class="filter-row"><span class="muted">All classroom assignments</span><span class="soft-tag" id="assignmentTotal">4 TASKS</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Assignment</th><th>Subject</th><th>Due date</th><th>Status</th><th>Action</th></tr></thead><tbody id="assignmentRows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="view" id="resourcesView">
+        <div class="content-grid resource-grid">
+          <article class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">CLASSROOM UPDATES</p><h2>Announcements</h2></div><button class="primary-button" id="addAnnouncementButton">＋ New update</button></div>
+            <div id="allAnnouncements" class="announcement-list"></div>
+          </article>
+          <article class="panel resource-card">
+            <div class="panel-heading"><div><p class="eyebrow">QUICK ACCESS</p><h2>Learning resources</h2></div></div>
+            <div class="resource-item"><span class="resource-icon purple">PDF</span><div><strong>Java Programming Notes</strong><small>Study material · Sample</small></div><span class="resource-arrow">↗</span></div>
+            <div class="resource-item"><span class="resource-icon green">DOC</span><div><strong>DBMS Lab Manual</strong><small>Lab reference · Sample</small></div><span class="resource-arrow">↗</span></div>
+            <div class="resource-item"><span class="resource-icon orange">LINK</span><div><strong>Online Learning Portal</strong><small>External resource placeholder</small></div><span class="resource-arrow">↗</span></div>
+            <p class="resource-hint">These are demonstration resource entries. Replace them with your class files or links.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer"><span>© 2026 SmartClass Classroom System</span><span>Designed for better learning experiences <b>✦</b></span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <form class="modal" id="entryForm">
+      <button type="button" class="modal-close" id="closeModal" aria-label="Close">×</button>
+      <p class="eyebrow" id="modalEyebrow">CLASSROOM UPDATE</p>
+      <h2 id="modalTitle">Create announcement</h2>
+      <label for="entryTitle">Title</label><input id="entryTitle" type="text" maxlength="70" required placeholder="Enter a clear title">
+      <label for="entryDetail">Details</label><textarea id="entryDetail" rows="3" maxlength="240" placeholder="Add a short description"></textarea>
+      <div id="assignmentFields" class="hidden">
+        <label for="entrySubject">Subject</label><input id="entrySubject" type="text" placeholder="e.g. Java Programming">
+        <label for="entryDue">Due date</label><input id="entryDue" type="date">
+      </div>
+      <button class="primary-button modal-submit" type="submit">Save</button>
+    </form>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
